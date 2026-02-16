@@ -100,7 +100,7 @@ const Hero = () => {
               <span className="text-primary font-semibold">Software Developer</span>{' '}
               building web & mobile apps with{' '}
               <span className="text-primary font-semibold">React</span>,{' '}
-              <span className="text-primary font-semibold">Laravel</span>, and{' '}
+              <span className="text-primary font-semibold">Laravel</span>
               {/* <span className="text-primary font-semibold">Flutter</span>. */}
             </motion.p>
           </motion.div>
