@@ -99,7 +99,7 @@ const Hero = () => {
               A passionate{' '}
               <span className="text-primary font-semibold">Software Developer</span>{' '}
               building web & mobile apps with{' '}
-              <span className="text-primary font-semibold">React</span>,{' '}
+              <span className="text-primary font-semibold">React</span>
               <span className="text-primary font-semibold">Laravel</span>
               {/* <span className="text-primary font-semibold">Flutter</span>. */}
             </motion.p>
