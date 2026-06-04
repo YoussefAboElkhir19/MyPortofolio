@@ -101,7 +101,7 @@ const Hero = () => {
                   building web & mobile apps with{' '}
                   <span className="text-primary font-semibold">React</span>
                   <span className="text-primary font-semibold">Laravel</span>
-                  <span className="text-primary font-semibold">WordPress</span>.
+                  <span className="text-primary font-semibold">  and WordPress</span>.
                 </motion.p>
               </motion.div>
 
