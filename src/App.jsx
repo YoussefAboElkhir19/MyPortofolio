@@ -8,11 +8,9 @@ function App() {
   return (
     <HelmetProvider>
       <ThemeProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Portfolio />} />
-          </Routes>
-        </Router>
+        <Routes>
+          <Route path="/" element={<Portfolio />} />
+        </Routes>
       </ThemeProvider>
     </HelmetProvider>
   );
