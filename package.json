@@ -1,10 +1,11 @@
 {
-"homepage": "https://YoussefAboElkhir19.github.io/MyPortofolio",  "private": true,
+  "homepage": "https://YoussefAboElkhir19.github.io/MyPortofolio",
+  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "node api.js && vite",
+    "build": "node api.js && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
