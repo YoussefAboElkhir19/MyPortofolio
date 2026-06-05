@@ -1,258 +1,153 @@
 import { motion } from 'framer-motion';
-import { FaDownload, FaPaperPlane, FaExternalLinkAlt } from 'react-icons/fa';
-import profileImage from '../assets/mee.jpg';
+import {
+  FaArrowRight,
+  FaGithub,
+  FaLinkedin,
+  FaPaperPlane,
+  FaWhatsapp,
+} from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import profilePhoto from '../assets/mee.png';
+import { profile } from '../data/portfolio';
+
+const socialLinks = [
+  { label: 'LinkedIn', href: profile.linkedIn, icon: FaLinkedin, tone: 'text-blue-400' },
+  { label: 'GitHub', href: profile.github, icon: FaGithub, tone: 'text-slate-300' },
+  { label: 'WhatsApp', href: profile.whatsapp, icon: FaWhatsapp, tone: 'text-emerald-400' },
+];
 
 const Hero = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  const handleViewCV = () => {
-    // Open CV in a new tab for preview
-    window.open('https://drive.google.com/file/d/1aRyGq52QULs0VGuyZBLv976gmBizB2tK/view?usp=sharing', '_blank');
-  };
-
-
-  const scrollToContact = () => {
-    const contactSection = document.querySelector('#contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const navigate = useNavigate();
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-bg-dark dark:to-slate-900">
-      {/* Background Animation */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            rotate: [360, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"
-        />
-      </div>
+    <section className="relative isolate flex min-h-screen items-center overflow-hidden bg-[#071923] px-4 py-20 text-white sm:px-6 lg:px-8">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#082235] via-[#071923] to-[#06131c]" />
+      <div className="absolute -left-24 top-24 -z-10 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
+      <div className="absolute -right-16 bottom-16 -z-10 h-80 w-80 rounded-full bg-teal-500/10 blur-3xl" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div className="text-center lg:text-left">
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-8"
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-5 rounded-full border border-cyan-300/20 bg-cyan-300/8 px-4 py-2 text-sm font-semibold text-cyan-200 shadow-lg shadow-cyan-950/20 backdrop-blur"
+          >
+            Available for freelance projects
+          </motion.p>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 34 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, ease: 'easeOut', delay: 0.08 }}
+            className="font-poppins text-4xl font-bold leading-tight text-cyan-200 sm:text-6xl lg:text-7xl"
+          >
+            Hi All, I'm {profile.name}
+          </motion.h1>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.18 }}
+            className="mt-6 font-poppins text-2xl font-semibold text-cyan-500/80 sm:text-4xl"
+          >
+            {profile.role}
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.28 }}
+            className="mt-7 max-w-3xl text-base font-semibold leading-8 text-teal-100/65 sm:text-lg"
+          >
+            React(Next.js), Laravel , WordPress.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.38 }}
+            className="mt-9 flex flex-col gap-3 sm:flex-row"
+          >
+            <motion.button
+              onClick={() => navigate('/projects')}
+              whileHover={{ y: -3, scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center justify-center gap-3 rounded-2xl border border-cyan-300/30 bg-cyan-400/10 px-7 py-4 text-sm font-bold text-cyan-100 shadow-lg shadow-cyan-950/20 backdrop-blur transition hover:bg-cyan-300 hover:text-[#071923]"
             >
-              {/* Greeting */}
-              <motion.div variants={itemVariants} className="space-y-4">
-                <motion.h1
-                  className="text-4xl md:text-6xl lg:text-7xl font-bold text-text-light dark:text-text-dark font-poppins"
-                  initial={{ scale: 0.5 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.8, ease: 'easeOut' }}
-                >
-                  Hi, I'm{' '}
-                  <span className="text-primary bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-                    Youssef Essam
-                  </span>{' '}
+              View Projects <FaArrowRight />
+            </motion.button>
 
-                </motion.h1>
-
-                <motion.p
-                  variants={itemVariants}
-                  className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 font-inter max-w-4xl mx-auto leading-relaxed"
-                >
-                  A passionate{' '}
-                  <span className="text-primary font-semibold">Software Developer</span>{' '}
-                  building web & mobile apps with{' '}
-                  <span className="text-primary font-semibold">React</span>
-                  <span className="text-primary font-semibold"> , Laravel</span>
-                  <span className="text-primary font-semibold">  and WordPress</span>.
-                </motion.p>
-              </motion.div>
-
-              {/* Buttons */}
-              <motion.div
-                variants={itemVariants}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-8"
-              >
-                <motion.button
-                  onClick={handleViewCV}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="group flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-full font-inter font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  <FaExternalLinkAlt className="group-hover:animate-bounce" />
-                  View CV
-                </motion.button>
-
-                <motion.button
-                  onClick={scrollToContact}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="group flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-primary text-primary dark:text-primary rounded-full font-inter font-semibold  hover:text-white transition-all duration-300"
-                >
-                  <FaPaperPlane className="group-hover:translate-x-1 transition-transform duration-300" />
-                  Contact Me
-                </motion.button>
-              </motion.div>
-
-              {/* Scroll Indicator */}
-              <motion.div
-                variants={itemVariants}
-                className="pt-16"
-              >
-                <motion.div
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-6 h-10 border-2 border-primary rounded-full mx-auto flex justify-center"
-                >
-                  <motion.div
-                    animate={{ y: [0, 12, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="w-1 h-3 bg-primary rounded-full mt-2"
-                  />
-                </motion.div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 font-inter">
-                  Scroll to explore
-                </p>
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* Right Content - 3D Profile Image */}
-          <div className="flex justify-center lg:justify-end">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotateY: -90 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 1, ease: 'easeOut' }}
-              whileHover={{
-                rotateY: 10,
-                rotateX: 5,
-                scale: 1.05,
-                transition: { duration: 0.3 }
-              }}
-              className="relative"
+            <Link
+              to="https://drive.google.com/file/d/1aRyGq52QULs0VGuyZBLv976gmBizB2tK/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              {/* 3D Container */}
-              <div className="relative perspective-1000">
-                {/* Profile Image */}
-                <motion.div
-                  className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden shadow-2xl"
-                  style={{
-                    transformStyle: 'preserve-3d',
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  }}
-                >
-                  {/* Profile Image */}
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center relative overflow-hidden">
-                    <motion.div
-                      className="relative w-80 h-80 rounded-full overflow-hidden shadow-2xl border-4 border-white/20"
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.8, ease: 'easeOut' }}
-                    >
-                      <img
-                        src={profileImage}
-                        alt="Youssef Essam"
-                        className="w-full h-full object-cover rounded-full"
-                      />
-                      {/* Gradient overlay for better 3D effect */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent rounded-full" />
-                    </motion.div>
-                  </div>
-
-                  {/* Floating Elements */}
-                  <motion.div
-                    animate={{ y: [-20, 20, -20] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute top-4 right-4 w-6 h-6 bg-primary rounded-full opacity-60"
-                  />
-                  <motion.div
-                    animate={{ y: [20, -20, 20] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute bottom-8 left-6 w-4 h-4 bg-purple-500 rounded-full opacity-60"
-                  />
-                  <motion.div
-                    animate={{ y: [-15, 15, -15] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute top-1/2 left-4 w-3 h-3 bg-blue-400 rounded-full opacity-60"
-                  />
-                </motion.div>
-
-                {/* 3D Shadow */}
-                <motion.div
-                  className="absolute inset-0 bg-black/20 rounded-2xl blur-xl"
-                  animate={{
-                    scale: [1, 1.1, 1],
-                    opacity: [0.3, 0.5, 0.3]
-                  }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                  style={{ transform: 'translateZ(-50px)' }}
-                />
-
-                {/* Floating Tech Icons */}
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                  className="absolute -top-4 -right-4 w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center"
-                >
-                  <span className="text-2xl">⚛️</span>
-                </motion.div>
-
-                <motion.div
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-                  className="absolute -bottom-4 -left-4 w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center"
-                >
-                  <span className="text-xl">🚀</span>
-                </motion.div>
-
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                  className="absolute top-1/2 -left-6 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center"
-                >
-                  <span className="text-lg">💻</span>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
+              <motion.button
+                whileHover={{ y: -3, scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-cyan-200 px-7 py-4 text-sm font-bold text-[#071923] shadow-lg shadow-cyan-950/20 transition hover:bg-white sm:w-auto"
+              >
+                My CV <FaPaperPlane />
+              </motion.button>
+            </Link>
+          </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
+          className="relative mx-auto flex w-full max-w-md items-center justify-center lg:max-w-none"
+        >
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            className="relative"
+          >
+            <div className="absolute -inset-5 rounded-[2rem] bg-gradient-to-br from-cyan-300/35 via-teal-400/15 to-blue-500/20 blur-2xl" />
+            <div className="absolute -right-3 -top-3 h-24 w-24 rounded-full border border-cyan-300/20 bg-cyan-300/10 backdrop-blur-xl" />
+            <div className="absolute -bottom-4 -left-4 h-20 w-20 rounded-2xl border border-teal-300/15 bg-[#214d65]/40 backdrop-blur-xl" />
+
+            <div className="relative rounded-[2rem] border border-cyan-300/25 bg-white/[0.04] p-3 shadow-2xl shadow-cyan-950/30 backdrop-blur-xl">
+              <div className="overflow-hidden rounded-[1.4rem] border border-white/10">
+                <img
+                  src={profilePhoto}
+                  alt={profile.name}
+                  className="aspect-[4/5] w-full max-w-[320px] object-cover object-top sm:max-w-[360px] lg:max-w-[400px]"
+                />
+              </div>
+
+              <div className="absolute inset-3 rounded-[1.4rem] bg-gradient-to-t from-[#071923]/55 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-white/10 bg-[#071923]/55 px-4 py-3 text-left backdrop-blur-md">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">{profile.location}</p>
+                <p className="mt-1 font-poppins text-lg font-bold text-white">{profile.role}</p>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.48 }}
+          className="mt-12 flex items-center justify-center gap-4"
+        >
+          {socialLinks.map((item) => (
+            <motion.a
+              key={item.label}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ y: -3, scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              className={`grid h-11 w-11 place-items-center rounded-xl border border-cyan-300/20 bg-white/5 text-xl backdrop-blur transition hover:border-cyan-300/40 hover:bg-cyan-300/15 ${item.tone}`}
+              aria-label={item.label}
+            >
+              <item.icon />
+            </motion.a>
+          ))}
+        </motion.div> */}
       </div>
     </section>
   );
