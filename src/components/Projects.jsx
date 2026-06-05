@@ -1,235 +1,155 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { FaGithub, FaExternalLinkAlt, FaReact, FaLaravel, FaHtml5, FaJs, FaVuejs } from 'react-icons/fa';
-import { SiTailwindcss, SiMysql, SiFlutter } from 'react-icons/si';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { projectCategories, projects } from '../data/portfolio';
+import { useReveal } from '../hooks/useReveal';
+import SectionHeader from './SectionHeader';
+
+const ProjectCard = ({ project, index }) => (
+  <motion.article
+    layout
+    variants={{
+      hidden: { opacity: 0, y: 34 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
+      exit: { opacity: 0, y: -16, transition: { duration: 0.25 } },
+    }}
+    whileHover={{ y: -10, rotateX: 2, rotateY: index % 2 === 0 ? -2 : 2 }}
+    className="group flex min-h-[440px] flex-col overflow-hidden rounded-2xl border border-cyan-300/15 bg-white/[0.06] shadow-xl shadow-black/10 backdrop-blur-xl transition-shadow hover:shadow-2xl hover:shadow-cyan-950/25"
+  >
+    <div className="relative h-40 overflow-hidden bg-slate-950 p-5">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(51,167,177,.45),transparent_30%),radial-gradient(circle_at_75%_35%,rgba(33,77,101,.75),transparent_32%),linear-gradient(135deg,#071923,#214d65)]" />
+      <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.5)_1px,transparent_1px)] [background-size:28px_28px]" />
+      <div className="relative z-10 flex h-full flex-col justify-between">
+        <span className="w-fit rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-cyan-100 backdrop-blur-xl">{project.date}</span>
+        <div>
+          <p className="text-sm font-semibold uppercase text-white/60">Case Study</p>
+          <h3 className="mt-2 font-poppins text-2xl font-bold leading-tight text-white">{project.name}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div className="flex flex-1 flex-col p-6">
+      <p className="leading-7 text-slate-300">{project.description}</p>
+
+      <div className="mt-6 flex flex-wrap gap-2">
+        {project.tech.map((tech) => (
+          <span key={tech} className="rounded-full border border-cyan-300/15 bg-[#214d65]/40 px-3 py-2 text-xs font-bold text-cyan-100">
+            {tech}
+          </span>
+        ))}
+      </div>
+
+      <div className="mt-auto flex gap-3 pt-7">
+        {project.github && (
+          <motion.a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border border-cyan-300/20 px-4 py-3 text-sm font-bold text-cyan-100 transition hover:bg-cyan-200 hover:text-[#071923]"
+          >
+            <FaGithub /> GitHub
+          </motion.a>
+        )}
+        <motion.a
+          href={project.demo}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.98 }}
+          className={`inline-flex items-center justify-center gap-2 rounded-2xl bg-cyan-200 px-4 py-3 text-sm font-bold text-[#071923] shadow-lg shadow-cyan-950/20 ${
+            project.github ? 'flex-1' : 'w-full'
+          }`}
+        >
+          <FaExternalLinkAlt /> {project.github ? 'Demo' : 'Live Site'}
+        </motion.a>
+      </div>
+    </div>
+  </motion.article>
+);
 
 const Projects = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { ref, isInView } = useReveal();
+  const [activeTab, setActiveTab] = useState(projectCategories[0].id);
 
-  const projects = [
-    {
-      title: 'Construction Project Management App',
-      description: 'A comprehensive project management application for construction companies with real-time tracking, team collaboration, and resource management features.',
-      tech: ['React', 'Laravel', 'JWT', 'MySQL'],
-      icons: [FaReact, FaLaravel, FaJs, SiMysql],
-      date: '2024',
-      github: 'https://github.com/YoussefAboElkhir19/construction.git',
-      demo: 'https://github.com/YoussefAboElkhir19/construction.git',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      title: 'Nofa Egypt',
-      description: 'A modern e-commerce website for Nofa Egypt with product catalog, shopping cart, payment integration, and admin dashboard.',
-      tech: ['React', 'Tailwind', 'JavaScript', 'API'],
-      icons: [FaReact, SiTailwindcss, FaJs, FaExternalLinkAlt],
-      date: '2024',
-      github: 'https://youssefaboelkhir19.github.io/nofa-egypt/',
-      demo: 'https://youssefaboelkhir19.github.io/nofa-egypt/',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      title: 'Student Management System',
-      description: 'A complete student information system with enrollment, grades, attendance tracking, and report generation capabilities.',
-      tech: ['Laravel', 'MySQL', 'Blade', 'Bootstrap'],
-      icons: [FaLaravel, SiMysql, FaHtml5, FaReact],
-      date: '2023',
-      
-      github: 'https://github.com/YoussefAboElkhir19/student-management-system.git',
-      demo: 'https://github.com/YoussefAboElkhir19/student-management-system.git',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      title: 'InspireBox',
-      description: 'A Flutter-based mobile application for inspiration and motivation with daily quotes, goal tracking, and habit formation features.',
-      tech: ['Flutter', 'Dart', 'MVVM', 'Provider'],
-      icons: [SiFlutter, FaJs, FaReact, FaReact],
-      date: '2024',
-      github: 'https://github.com/YoussefAboElkhir19/flutter-app.git',
-      demo: 'https://github.com/YoussefAboElkhir19/flutter-app.git',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      title: 'Travel App',
-      description: 'A responsive Travel application with ',
-      tech: ['React', 'Laravel', 'MySQL', 'PHP', 'JavaScript','Tailwind' ,  'Fetch API'],
-      icons: [FaReact, FaLaravel, SiMysql, FaJs, FaExternalLinkAlt, SiTailwindcss],
-      date: '2025',
-      github: 'https://github.com/YoussefAboElkhir19/travel-main0.git',
-      demo: 'https://github.com/YoussefAboElkhir19/travel-main0.git',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      title: 'To Do List',
-      description: 'A responsive weather application with location-based forecasts, interactive maps, and weather alerts using external APIs.',
-      tech: ['Vue', 'Tailwind','HTML' , 'JavaScript'],
-      icons: [FaVuejs, SiTailwindcss, FaHtml5, FaJs],
-      date: '2023',
-      github: 'https://github.com/Youssefaboelkhir19',
-      demo: '#',
-      image: '/api/placeholder/400/300'
-    }
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
-  };
+  const filteredProjects = projects.filter((project) => project.category === activeTab);
 
   return (
-    <section id="projects" className="py-20 bg-white dark:bg-bg-dark">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="portfolio-page portfolio-page-alt py-20 sm:py-24">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeader
+          eyebrow="Projects"
+          title="Selected builds that show"
+          accent="real product work"
+          description="Full-stack dashboards, business websites, mobile architecture, authentication, data workflows, and responsive UI implementation."
+        />
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: 'easeOut' }}
+          viewport={{ once: true, margin: '-80px' }}
+          className="mx-auto mb-12 flex max-w-3xl flex-wrap items-center justify-center gap-2 rounded-2xl border border-cyan-300/15 bg-white/[0.04] p-2 backdrop-blur-xl sm:gap-3"
+          role="tablist"
+          aria-label="Project categories"
+        >
+          {projectCategories.map((category) => {
+            const isActive = activeTab === category.id;
+
+            return (
+              <button
+                key={category.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveTab(category.id)}
+                className={`relative rounded-xl px-4 py-2.5 text-sm font-bold transition sm:px-5 sm:py-3 sm:text-base ${
+                  isActive ? 'text-[#071923]' : 'text-cyan-100 hover:bg-white/5 hover:text-white'
+                }`}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="project-tab-indicator"
+                    className="absolute inset-0 rounded-xl bg-cyan-200 shadow-lg shadow-cyan-950/20"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{category.label}</span>
+              </button>
+            );
+          })}
+        </motion.div>
+
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-text-light dark:text-text-dark mb-4 font-poppins">
-            My <span className="text-primary">Projects</span>
-          </h2>
-          <div className="w-24 h-1 bg-primary mx-auto mb-8" />
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-inter">
-            Here are some of my recent projects that showcase my skills and passion for creating innovative solutions.
-          </p>
-        </motion.div>
-
-        <motion.div
-          variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          animate={isInView ? 'visible' : 'hidden'}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.08 } },
+          }}
+          className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
         >
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              variants={itemVariants}
-              whileHover={{ y: -10 }}
-              className="group bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
-            >
-              {/* Project Image */}
-              <div className="relative h-48 bg-gradient-to-br from-primary to-purple-600 overflow-hidden">
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <div className="flex justify-center space-x-4 mb-4">
-                      {project.icons.map((Icon, iconIndex) => (
-                        <div
-                          key={iconIndex}
-                          className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm"
-                        >
-                          <Icon size={20} />
-                        </div>
-                      ))}
-                    </div>
-                    <span className="text-sm font-medium opacity-90">
-                      {project.date}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Project Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-text-light dark:text-text-dark mb-3 font-poppins group-hover:text-primary transition-colors duration-300">
-                  {project.title}
-                </h3>
-                
-                <p className="text-gray-600 dark:text-gray-300 mb-4 font-inter leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium font-inter"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex space-x-3">
-                  <motion.a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-text-light dark:text-text-dark rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300 font-inter font-medium"
-                  >
-                    <FaGithub size={16} />
-                    <span>Code</span>
-                  </motion.a>
-                  
-                  <motion.a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 font-inter font-medium"
-                  >
-                    <FaExternalLinkAlt size={16} />
-                    <span>Demo</span>
-                  </motion.a>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-xl p-8">
-            <h3 className="text-2xl font-bold text-text-light dark:text-text-dark mb-4 font-poppins">
-              Interested in Working Together?
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6 font-inter">
-              I'm always excited to take on new challenges and collaborate on interesting projects.
-            </p>
-            <motion.button
-              onClick={() => {
-                const contactSection = document.querySelector('#contact');
-                if (contactSection) {
-                  contactSection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 font-inter font-semibold"
-            >
-              Get In Touch
-            </motion.button>
-          </div>
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((project, index) => (
+                <ProjectCard key={project.name} project={project} index={index} />
+              ))
+            ) : (
+              <motion.div
+                key="empty-state"
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                className="col-span-full rounded-2xl border border-dashed border-cyan-300/20 bg-white/[0.03] px-6 py-16 text-center backdrop-blur-xl"
+              >
+                <p className="font-poppins text-xl font-bold text-white">No projects in this category yet.</p>
+                <p className="mt-3 text-slate-400">Projects in this category will appear here soon.</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

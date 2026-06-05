@@ -17,14 +17,16 @@ html {
 body {
   font-family: 'Poppins', 'Inter', sans-serif;
   line-height: 1.6;
-  color: #111827;
-  background-color: #F9FAFB;
-  transition: all 0.3s ease;
+  color: #0f172a;
+  background-color: #f8fafc;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body.dark {
-  color: #F1F5F9;
-  background-color: #0F172A;
+  color: #f8fafc;
+  background-color: #020617;
 }
 
 /* Custom scrollbar */
@@ -41,17 +43,35 @@ body.dark {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3B82F6;
+  background: #33a7b1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
+  background: #5ec4cc;
 }
 
-/* Smooth transitions for theme changes */
-* {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+::selection {
+  background: rgba(51, 167, 177, 0.28);
+}
+
+.portfolio-page {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 15% 12%, rgba(51, 167, 177, 0.16), transparent 28%),
+    radial-gradient(circle at 85% 16%, rgba(33, 77, 101, 0.42), transparent 30%),
+    linear-gradient(180deg, #071923 0%, #06131c 100%);
+}
+
+.portfolio-page-alt {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(51, 167, 177, 0.13), transparent 30%),
+    radial-gradient(circle at 18% 78%, rgba(33, 77, 101, 0.42), transparent 34%),
+    linear-gradient(180deg, #082235 0%, #071923 100%);
 }
 
 /* Custom animations */
