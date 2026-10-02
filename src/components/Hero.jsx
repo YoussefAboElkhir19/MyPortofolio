@@ -7,7 +7,7 @@ import {
   FaWhatsapp,
 } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import profilePhoto from '../assets/mee.png';
+import profilePhoto from '../assets/mee.jpeg';
 import { profile } from '../data/portfolio';
 
 const socialLinks = [
